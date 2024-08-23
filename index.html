@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send SMS with Random Credentials</title>
+</head>
+<body>
+    <h1>Send SMS with Random Credentials</h1>
+    <form id="smsForm">
+        <label for="phone">Enter your phone number:</label>
+        <input type="text" id="phone" name="phone">
+        <button type="submit">Send SMS</button>
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        document.getElementById('smsForm').addEventListener('submit', function(event) {
+            // event.preventDefault();
+            
+            const phone = document.getElementById('phone').value;
+
+            fetch(`/send-credentials?phone=${encodeURIComponent(phone)}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('response').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('response').textContent = 'Failed to send SMS';
+                });
+        });
+    </script>
+</body>
+</html>
